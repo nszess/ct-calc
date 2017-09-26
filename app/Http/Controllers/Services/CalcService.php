@@ -43,10 +43,8 @@ class CalcService
       $tempHigh = intval($this->roundUp($temp, 5));
       $tempLow = intval($this->roundDown($temp, 5));
 
-      //return $tempHigh;//KILL
-
       switch ($disinfectantType) {
-        case 1://Free Chlorine
+        case 'free_chlorine':
           //round temp to 5 between 1-25
           $temp_roundUp = ceil($_dis * 5) / 5;
           $temp_roundDown = floor($_dis * 5) / 5;
@@ -56,7 +54,7 @@ class CalcService
           $logGiardia_roundDown = floor($_dis * 5) / 5;
           break;
 
-        case 2://Chlorine Dioxide
+        case 'chlorine_dioxide':
           $resultHigh = ChlorineDioxideGiardiaInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logGiardia)
             ->first()
@@ -68,7 +66,7 @@ class CalcService
             ->inactivation;
           break;
 
-        case 3://Chloramine
+        case 'chloramine':
           $resultHigh = ChloramineGiardiaInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logGiardia)
             ->first()
@@ -80,7 +78,7 @@ class CalcService
             ->inactivation;
           break;
 
-        case 4://Ozone
+        case 'ozone':
           $resultHigh = OzoneGiardiaInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logGiardia)
             ->first()
@@ -92,8 +90,10 @@ class CalcService
             ->inactivation;
           break;
 
+        //TODO ERROR HANDELING
         default: return -1;
       }
+
       return $this->interpolate($temp, $tempLow, $resultLow, $tempHigh, $resultHigh);
     }
 
@@ -108,7 +108,7 @@ class CalcService
       //return $tempHigh;
 
       switch ($disinfectantType) {
-        case 1://Free Chlorine
+        case 'free_chlorine':
           $resultHigh = FreeChlorineVirusInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logVirus)
             ->first()
@@ -120,7 +120,7 @@ class CalcService
             ->inactivation;
           break;
 
-        case 2://Chlorine Dioxide
+        case 'chlorine_dioxide':
           $resultHigh = ChlorineDioxideVirusInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logVirus)
             ->first()
@@ -132,7 +132,7 @@ class CalcService
             ->inactivation;
           break;
 
-        case 3://Chloramine
+        case 'chloramine':
           $resultHigh = ChloramineVirusInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logVirus)
             ->first()
@@ -144,7 +144,7 @@ class CalcService
             ->inactivation;
           break;
 
-        case 4://Ozone
+        case 'ozone':
           $resultHigh = OzoneVirusInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logVirus)
             ->first()
@@ -156,6 +156,7 @@ class CalcService
             ->inactivation;
         break;
 
+        //TODO ERROR HANDELING
         default: return -1;
       }
       return $this->interpolate($temp, $tempLow, $resultLow, $tempHigh, $resultHigh);

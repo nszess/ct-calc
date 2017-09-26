@@ -15,10 +15,10 @@
           <div class="col-3">
             {!!
               Form::select('disinfectantType', [
-                '1' => 'Free Chlorine',
-                '2' => 'Chlorine Dioxide',
-                '3' => 'Chloramine',
-                '4' => 'Ozone',
+                'free_chlorine' => 'Free Chlorine',
+                'chlorine_dioxide' => 'Chlorine Dioxide',
+                'chloramine' => 'Chloramine',
+                'ozone' => 'Ozone',
               ],
               $disinfectantType, [
                 'id' => 'disinfectantTypeInput',
