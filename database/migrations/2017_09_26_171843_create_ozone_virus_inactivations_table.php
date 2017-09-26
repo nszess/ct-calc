@@ -17,7 +17,7 @@ class CreateOzoneVirusInactivationsTable extends Migration
           $table->increments('id');
           $table->unsignedTinyInteger('temperature'); //Max 255
           $table->unsignedTinyInteger('log_inactivation');  //2 digits total, 1 after .
-          $table->unsignedSmallInteger('inactivation');
+          $table->float('inactivation', 3, 2);
         });
     }
 

@@ -17,7 +17,7 @@ class CreateOzoneGiardiaInactivationsTable extends Migration
           $table->increments('id');
           $table->unsignedTinyInteger('temperature'); //Max 255
           $table->float('log_inactivation', 2, 1);  //2 digits total, 1 after .
-          $table->unsignedSmallInteger('float');
+          $table->float('inactivation', 3, 2);
         });
     }
 
