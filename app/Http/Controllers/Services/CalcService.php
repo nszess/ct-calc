@@ -58,36 +58,36 @@ class CalcService
 
         case 2://Chlorine Dioxide
           $resultHigh = ChlorineDioxideGiardiaInactivation::where('temperature', $tempHigh)
-            ->where('log_inactivation', 2*$logGiardia)
+            ->where('log_inactivation', $logGiardia)
             ->first()
             ->inactivation;
 
           $resultLow = ChlorineDioxideGiardiaInactivation::where('temperature', $tempLow)
-            ->where('log_inactivation', 2*$logGiardia)
+            ->where('log_inactivation', $logGiardia)
             ->first()
             ->inactivation;
           break;
 
         case 3://Chloramine
           $resultHigh = ChloramineGiardiaInactivation::where('temperature', $tempHigh)
-            ->where('log_inactivation', 2*$logGiardia)
+            ->where('log_inactivation', $logGiardia)
             ->first()
             ->inactivation;
 
           $resultLow = ChloramineGiardiaInactivation::where('temperature', $tempLow)
-            ->where('log_inactivation', 2*$logGiardia)
+            ->where('log_inactivation', $logGiardia)
             ->first()
             ->inactivation;
           break;
 
         case 4://Ozone
           $resultHigh = OzoneGiardiaInactivation::where('temperature', $tempHigh)
-            ->where('log_inactivation', 2*$logGiardia)
+            ->where('log_inactivation', $logGiardia)
             ->first()
             ->inactivation;
 
           $resultLow = OzoneGiardiaInactivation::where('temperature', $tempLow)
-            ->where('log_inactivation', 2*$logGiardia)
+            ->where('log_inactivation', $logGiardia)
             ->first()
             ->inactivation;
           break;
