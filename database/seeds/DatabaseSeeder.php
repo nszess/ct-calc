@@ -11,6 +11,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(ChloramineGiardiaInactivationsTableSeeder::class);
+        $this->call(ChloramineVirusInactivationsTableSeeder::class);
+
+        $this->call(ChlorineDioxideGiardiaInactivationsTableSeeder::class);
+        $this->call(ChlorineDioxideVirusInactivationsTableSeeder::class);
+
+        //$this->call(ChlorineDioxideGiardiaInactivationsTableSeeder::class);
+        //$this->call(ChlorineDioxideVirusInactivationsTableSeeder::class);
+
+        $this->call(OzoneGiardiaInactivationsTableSeeder::class);
+        $this->call(OzoneVirusInactivationsTableSeeder::class);
     }
 }
