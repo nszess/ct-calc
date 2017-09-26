@@ -2,6 +2,15 @@
 
 namespace App\Http\Controllers\Services;
 
+use App\ChloramineGiardiaInactivation;
+use App\ChloramineVirusInactivation;
+use App\ChlorineDioxideGiardiaInactivation;
+use App\ChlorineDioxideVirusInactivation;
+use App\FreeChlorineGiardiaInactivation;
+use App\FreeChlorineVirusInactivation;
+use App\OzoneGiardiaInactivation;
+use App\OzoneVirusInactivation;
+
 class CalcService
 {
 
@@ -48,37 +57,37 @@ class CalcService
           break;
 
         case 2://Chlorine Dioxide
-          $resultHigh = GiardiaChlorineDioxide::where('temperature', $tempHigh)
-            ->where('log_giardia', 2*$logGiardia)
+          $resultHigh = ChlorineDioxideGiardiaInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', 2*$logGiardia)
             ->first()
             ->inactivation;
 
-          $resultLow = GiardiaChlorineDioxide::where('temperature', $tempLow)
-            ->where('log_giardia', 2*$logGiardia)
+          $resultLow = ChlorineDioxideGiardiaInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', 2*$logGiardia)
             ->first()
             ->inactivation;
           break;
 
         case 3://Chloramine
-          $resultHigh = GiardiaChloramine::where('temperature', $tempHigh)
-            ->where('log_giardia', 2*$logGiardia)
+          $resultHigh = ChloramineGiardiaInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', 2*$logGiardia)
             ->first()
             ->inactivation;
 
-          $resultLow = GiardiaChloramine::where('temperature', $tempLow)
-            ->where('log_giardia', 2*$logGiardia)
+          $resultLow = ChloramineGiardiaInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', 2*$logGiardia)
             ->first()
             ->inactivation;
           break;
 
         case 4://Ozone
-          $resultHigh = GiardiaOzone::where('temperature', $tempHigh)
-            ->where('log_giardia', 2*$logGiardia)
+          $resultHigh = OzoneGiardiaInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', 2*$logGiardia)
             ->first()
             ->inactivation;
 
-          $resultLow = GiardiaOzone::where('temperature', $tempLow)
-            ->where('log_giardia', 2*$logGiardia)
+          $resultLow = OzoneGiardiaInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', 2*$logGiardia)
             ->first()
             ->inactivation;
           break;
@@ -100,49 +109,49 @@ class CalcService
 
       switch ($disinfectantType) {
         case 1://Free Chlorine
-          $resultHigh = VirusFreeChlorine::where('temperature', $tempHigh)
-            ->where('log_virus', $logVirus)
+          $resultHigh = FreeChlorineVirusInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
 
-          $resultLow = VirusFreeChlorine::where('temperature', $tempLow)
-            ->where('log_virus', $logVirus)
+          $resultLow = FreeChlorineVirusInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
           break;
 
         case 2://Chlorine Dioxide
-          $resultHigh = VirusChlorineDioxide::where('temperature', $tempHigh)
-            ->where('log_virus', $logVirus)
+          $resultHigh = ChlorineDioxideVirusInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
 
-          $resultLow = VirusChlorineDioxide::where('temperature', $tempLow)
-            ->where('log_virus', $logVirus)
+          $resultLow = ChlorineDioxideVirusInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
           break;
 
         case 3://Chloramine
-          $resultHigh = VirusChloramine::where('temperature', $tempHigh)
-            ->where('log_virus', $logVirus)
+          $resultHigh = ChloramineVirusInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
 
-          $resultLow = VirusChloramine::where('temperature', $tempLow)
-            ->where('log_virus', $logVirus)
+          $resultLow = ChloramineVirusInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
           break;
 
         case 4://Ozone
-          $resultHigh = VirusOzone::where('temperature', $tempHigh)
-            ->where('log_virus', $logVirus)
+          $resultHigh = OzoneVirusInactivation::where('temperature', $tempHigh)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
 
-          $resultLow = VirusOzone::where('temperature', $tempLow)
-            ->where('log_virus', $logVirus)
+          $resultLow = OzoneVirusInactivation::where('temperature', $tempLow)
+            ->where('log_inactivation', $logVirus)
             ->first()
             ->inactivation;
         break;
@@ -161,9 +170,9 @@ class CalcService
       $_disinfectantConcentration = floor($disinfectantConcentration * 5) / 5;//lowest .2
 
       //return query result
-      return GiardiaInactivation::where('temperature', $_temp)
+      return FreeChlorineGiardiaInactivation::where('temperature', $_temp)
         ->where('ph', $_ph)
-        ->where('log_giardia', $_logGiardia)
+        ->where('log_inactivation', $_logGiardia)
         ->where('disinfectant', $_disinfectantConcentration)
         ->first()
         ->inactivation;
