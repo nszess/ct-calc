@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Laravel collective for forms
+        //https://laravelcollective.com/docs/5.4/html
+        Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -226,6 +229,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        //Laravel collective for forms
+        //https://laravelcollective.com/docs/5.4/html
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
