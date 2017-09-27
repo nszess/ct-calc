@@ -4,9 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  {{-- Bootstrap4 --}}
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{asset('css/app.css')}}">
+  <link rel="stylesheet" href="../css/app.css">
 
 </head>
 <body>
@@ -34,39 +32,7 @@
     @yield('content')
   </div>
 
-  {{--Bootstrap 4--}}
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
-  <script>
-  //Show and Hide Methodology fields depending on disinfectantTypeInput, Show for Free Chlorine and Hide for all others
-  function toggleInputs() {
-    if( $('#disinfectantTypeInput').val() == 1 ) {
-      //$('#disinfectantConcentrationContainer').show();
-      //$('#timeContainer').show();
-      $('#phContainer').show();
-      $('#methodologyContainer').show();
-      $('#phWarning').hide();
-    }
-    else {
-      //$('#disinfectantConcentrationContainer').hide();
-      //$('#timeContainer').hide();
-      $('#phContainer').hide();
-      $('#methodologyContainer').hide();
-      $('#phWarning').show();
-    }
-  }
-
-  //preform toggle methodology on page load
-  $(document).ready(function() {
-    toggleInputs();
-  });
-
-  //preform toggle methodology on input change
-  $(document).on('change', '#disinfectantTypeInput', function() {
-      toggleInputs();
-  });
-  </script>
+  <script src="../js/jquery-3.2.1.min.js"></script>
+  <script src="../js/pub.js"></script>{{-- all js logic here, raw uncompiled --}}
 </body>
 </html>
