@@ -15,7 +15,7 @@ class CreateFreeChlorineGiardiaInactivationsTable extends Migration
     {
         Schema::create('free_chlorine_giardia_inactivations', function (Blueprint $table) {
           $table->increments('id');
-          $table->unsignedTinyInteger('temperature');
+          $table->float('temperature', 3, 1);
           $table->float('ph', 2, 1);
           $table->float('log_inactivation', 2, 1);
           $table->float('disinfectant_concentration', 2, 1);

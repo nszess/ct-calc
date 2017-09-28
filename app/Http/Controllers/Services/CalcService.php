@@ -11,11 +11,10 @@ use App\FreeChlorineVirusInactivation;
 use App\OzoneGiardiaInactivation;
 use App\OzoneVirusInactivation;
 
-class CalcService
-{
+class CalcService {
 
     //general interpolation formula, used by virus and giardia
-    public function interpolate($x, $x0, $y0, $x1, $y1)
+    private function interpolate($x, $x0, $y0, $x1, $y1)
     {
       if ($x0 == $x1 and $y0 == $y1) {
         return $y1;
@@ -23,37 +22,62 @@ class CalcService
       return (($x-$x0) * ($y1-$y0) / ($x1-$x0)) + $y0;
     }
 
-    //general rounding formulas, used by giardia and virus
-    public function roundUp($n, $x)
+    //general rounds, used by giardia and virus
+    private function roundUp($n, $x)
     {
       return $x * (ceil(abs($n/$x)));
     }
+
     public function roundDown($n, $x)
     {
-      $result = $x * (floor(abs($n/$x)));
-      if ($result == 0) {
+      return $x * (floor(abs($n/$x)));
+    }
+
+    //specialised round down, used !freeChlorine
+    private function roundDownTemp($n, $x) {
+      $result = $this->roundDown($n, $x);
+      if ($result < 1) {
         return 1;
       } else {
         return $result;
       }
     }
 
+    //specialised round down, used by free chlorine round
+    private function roundDownTempFreeChlorine($n, $x) {
+      $result = $this->roundDown($n, $x);
+      if ($result < 0.5) {
+        return 0.5;
+      } else {
+        return $result;
+      }
+    }
+
+    private function roundDownPh($n, $x) {
+      $result = $this->roundDown($n, $x);
+      if ($result < 6) {
+        return 6;
+      } else {
+        return $result;
+      }
+    }
+
+    private function roundDownDisinfectantConectration($n, $x) {
+      $result = $this->roundDown($n, $x);
+      if ($result < 0.4) {
+        return 0.4;
+      } else {
+        return round($result, 1);//round result to 1 decimal place, so float can be used to query db
+      }
+    }
+
+
     public function giardiaInterpolate($disinfectantType, $temp, $logGiardia)
     {
       $tempHigh = intval($this->roundUp($temp, 5));
-      $tempLow = intval($this->roundDown($temp, 5));
+      $tempLow = intval($this->roundDownTemp($temp, 5));
 
       switch ($disinfectantType) {
-        case 'free_chlorine':
-          //round temp to 5 between 1-25
-          $temp_roundUp = ceil($_dis * 5) / 5;
-          $temp_roundDown = floor($_dis * 5) / 5;
-
-          //round logGiardia to 0.5 between 0.5-3
-          $logGiardia_roundUp = ceil($_dis * 5) / 5;
-          $logGiardia_roundDown = floor($_dis * 5) / 5;
-          break;
-
         case 'chlorine_dioxide':
           $resultHigh = ChlorineDioxideGiardiaInactivation::where('temperature', $tempHigh)
             ->where('log_inactivation', $logGiardia)
@@ -99,13 +123,8 @@ class CalcService
 
     public function virusInterpolate($disinfectantType, $temp, $logVirus)
     {
-      //ONLY INTERPOLATE ON TEMP
-      //never interpolate log in all tables
-
       $tempHigh = intval($this->roundUp($temp, 5));
-      $tempLow = intval($this->roundDown($temp, 5));
-
-      //return $tempHigh;
+      $tempLow = intval($this->roundDownTemp($temp, 5));
 
       switch ($disinfectantType) {
         case 'free_chlorine':
@@ -164,17 +183,10 @@ class CalcService
 
     public function giardiaRound($disinfectantConcentration, $temp, $ph, $logGiardia)
     {
-      //round numbers down
-      $_temp = floor($temp * 2) / 2;//lowest .5 !!WRONG!! 0.5, 5, 10, 15, 20, 25
-      $_ph = floor($ph * 2) / 2;//lowest .5
-      $_logGiardia = floor($logGiardia * 2) / 2;//lowest .5
-      $_disinfectantConcentration = floor($disinfectantConcentration * 5) / 5;//lowest .2
-
-      //return query result
-      return FreeChlorineGiardiaInactivation::where('temperature', $_temp)
-        ->where('ph', $_ph)
-        ->where('log_inactivation', $_logGiardia)
-        ->where('disinfectant', $_disinfectantConcentration)
+      return FreeChlorineGiardiaInactivation::where('temperature', $this->roundDownTemp($temp, 5))
+        ->where('ph', $this->roundDownPh($ph, 0.5))
+        ->where('log_inactivation', $logGiardia)
+        ->where('disinfectant_concentration', $this->roundDownDisinfectantConectration($disinfectantConcentration, 0.2) )
         ->first()
         ->inactivation;
     }

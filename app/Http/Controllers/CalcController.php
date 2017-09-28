@@ -56,9 +56,11 @@ class CalcController extends Controller
 
       //conditional validation rules based on methodology
       $validator->sometimes('ph', 'required|numeric|between:6,9', function ($input) {
-          return $input->disinfectantType == 1;
+          return $input->disinfectantType == 'free_chlorine';
+        })->sometimes('disinfectantConcentration', 'required|numeric|between:0,3', function ($input) {
+          return $input->disinfectantType == 'free_chlorine';
         })->sometimes('calcMethod', 'required', function ($input) {
-          return $input->disinfectantType == 1;
+          return $input->disinfectantType == 'free_chlorine';
         });
 
       //preform validation
@@ -86,9 +88,9 @@ class CalcController extends Controller
     $ctProvided = $disinfectantConcentration * $time;
 
     //TABLES START IN APPENDIX C (C-1), p.135
-    if ($disinfectantType == "1") {//PUT IN ENUMS INSTEAD OF "1"
+    if ($disinfectantType == "free_chlorine") {
       switch ($calcMethod) {
-        case "round"://again, put in ENUM
+        case "round":
           $ctRequiredGiardia = $CalcService->giardiaRound($disinfectantConcentration, $temp, $ph, $logGiardia);
           break;
 
