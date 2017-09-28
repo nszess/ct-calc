@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ChlorineDioxideGiardiaInactivationsTableSeeder::class);
         $this->call(ChlorineDioxideVirusInactivationsTableSeeder::class);
 
-        //$this->call(ChlorineDioxideGiardiaInactivationsTableSeeder::class);
-        //$this->call(ChlorineDioxideVirusInactivationsTableSeeder::class);
+        $this->call(FreeChlorineGiardiaInactivationsTableSeeder::class);
+        $this->call(FreeChlorineVirusInactivationsTableSeeder::class);
 
         $this->call(OzoneGiardiaInactivationsTableSeeder::class);
         $this->call(OzoneVirusInactivationsTableSeeder::class);
