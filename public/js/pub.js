@@ -1,18 +1,14 @@
+
 //Show and Hide Methodology fields depending on disinfectantTypeInput, Show for Free Chlorine and Hide for all others
 function toggleInputs() {
   if( $('#disinfectantTypeInput').val() == 'free_chlorine' ) {
-    //$('#disinfectantConcentrationContainer').show();
-    //$('#timeContainer').show();
-    $('#phContainer').show();
-    $('#methodologyContainer').show();
+    $('#phContainer').css('display', 'flex');//replace with show, show forces display:block
+    $('#methodologyContainer').css('display', 'flex');
     $('#phWarning').hide();
-  }
-  else {
-    //$('#disinfectantConcentrationContainer').hide();
-    //$('#timeContainer').hide();
+  } else {
     $('#phContainer').hide();
     $('#methodologyContainer').hide();
-    $('#phWarning').show();
+    $('#phWarning').css('display', 'flex');
   }
 }
 

@@ -75,7 +75,7 @@
           </div>
 
           {{-- ph Input --}}
-          <div id="phContainer" class="form-group row {{ $errors->has('ph') ? 'alert-danger' : '' }}">
+          <div id="phContainer" class="no-display form-group row {{ $errors->has('ph') ? 'alert-danger' : '' }}">
             <label for="ph" class="col-4 col-form-label">pH:</label>
             <div class="col-3">
               <input type="number" class="form-control" name="ph" step="0.01" min="0" value="{{ old('ph') ? old('ph') : $ph }}">
@@ -139,7 +139,7 @@
               </div>
 
               {{-- Methodology Input --}}
-              <div id="methodologyContainer" class="form-group row {{ $errors->has('calcMethod') ? 'alert-danger' : '' }}">
+              <div id="methodologyContainer" class="no-display form-group row {{ $errors->has('calcMethod') ? 'alert-danger' : '' }}">
                 <label for="time" class="col-4 col-form-label">Methodology:</label>
 
                 <div class="col-3">
