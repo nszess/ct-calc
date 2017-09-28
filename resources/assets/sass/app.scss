@@ -45,7 +45,7 @@ form {
 /* RESULTS ////////////////////////////////// */
 
 /*Form styling*/
-#inputs {
+#inputs, #solutions {
   padding: 20px;
   background-color: #f4f4f4;
   border: 1px solid #e3e3e3;
@@ -53,7 +53,7 @@ form {
 }
 
 /*float all input values to right*/
-div.col-2, div.col-3 {
+.results-value {
   text-align: right;
 }
 
@@ -70,6 +70,6 @@ div.row {
   display: none;
 }
 
-#giardiaSolutions, #virusSolutions {
+#solutions > div, #inputs > div {
   padding-top: 20px;
 }

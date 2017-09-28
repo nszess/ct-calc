@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Contact Time Calculator</h1>
+<h1>Calculator</h1>
 
 {{-- Form Begin --}}
       {{-- INSTALL FORM HERE https://laravelcollective.com/docs/5.4/html --}}
       {!! Form::open(['url' => 'calculator', 'method' => 'post']) !!}
       <fieldset>
-        <legend>Calculation Inputs</legend>
+        <legend>Inputs</legend>
 
         {{-- Disinfectant Type Input --}}
         <div class="form-group row {{ $errors->has('disinfectantType') ? 'alert-danger' : '' }}">
